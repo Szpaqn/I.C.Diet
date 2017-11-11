@@ -100,12 +100,12 @@ public class ListViewFoodAdapter extends ArrayAdapter<Food> implements Filterabl
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null || isFiltered){
             Food food = (Food)getItem(position);
-            if(food.getFood_rating() < 3){
+            if (food.getFood_rating() == 0){
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_items, parent, false);
+            } else if(food.getFood_rating() < 3){
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_items1, parent, false);
             } else if (food.getFood_rating() > 3){
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_items3, parent, false);
-            } else if (food.getFood_rating() == 0){
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_items, parent, false);
             } else {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_items2, parent, false);
             }

@@ -98,11 +98,20 @@ public class EditUserActivity extends AppCompatActivity {
             //adapter - update
             updateFood();
         }
+
+        //TODO send info to MainActivity, to update the listView
     }
 
     private void addFood() {
-
-        dbHelper.insertFood(editTextFoodName.getText().toString(), Integer.parseInt(editTextFoodHistamine.getText().toString()), getIntFromSpinnerRating());
+        if(editTextFoodName.getText().toString().isEmpty()){
+            //TODO show info, that you need a name
+        } else {
+        int foodHistamineLevel = 0;
+            if (!editTextFoodHistamine.getText().toString().isEmpty()) {
+                foodHistamineLevel = Integer.parseInt(editTextFoodHistamine.getText().toString());
+            }
+            dbHelper.insertFood(editTextFoodName.getText().toString(), foodHistamineLevel, getIntFromSpinnerRating());
+        }
     }
 
     private void updateFood() {
