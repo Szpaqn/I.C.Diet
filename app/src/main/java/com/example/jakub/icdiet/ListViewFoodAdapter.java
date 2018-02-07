@@ -1,7 +1,6 @@
 package com.example.jakub.icdiet;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,9 +59,9 @@ public class ListViewFoodAdapter extends ArrayAdapter<Food> implements Filterabl
                 } else {
                     constraint = constraint.toString().toLowerCase();
                     for (int i = 0; i < mOriginalValues.size(); i++) {
-                        String data = mOriginalValues.get(i).getFood_name();
+                        String data = mOriginalValues.get(i).getName();
                         if (data.toLowerCase().startsWith(constraint.toString())) {
-                            FilteredArrList.add(new Food(mOriginalValues.get(i).getFood_name(), mOriginalValues.get(i).getFood_rating(), mOriginalValues.get(i).getFood_histamine_level()));
+                            FilteredArrList.add(new Food(mOriginalValues.get(i).getName(), mOriginalValues.get(i).getRating(), mOriginalValues.get(i).getHistamine_level()));
                         }
                     }
                     // set the Filtered result to return
@@ -100,20 +99,20 @@ public class ListViewFoodAdapter extends ArrayAdapter<Food> implements Filterabl
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null || isFiltered){
             Food food = (Food)getItem(position);
-            if (food.getFood_rating() == 0){
+            if (food.getRating() == 0){
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_items, parent, false);
-            } else if(food.getFood_rating() < 3){
+            } else if(food.getRating() < 3){
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_items1, parent, false);
-            } else if (food.getFood_rating() > 3){
+            } else if (food.getRating() > 3){
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_items3, parent, false);
             } else {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_items2, parent, false);
             }
-            TextView foodName = (TextView) convertView.findViewById(R.id.food_name);
+            TextView foodName = (TextView) convertView.findViewById(R.id.name);
             TextView foodHistamine = (TextView) convertView.findViewById(R.id.food_histamine);
             // Populate the data into the template view using the data object
-            foodName.setText(food.getFood_name());
-            foodHistamine.setText(String.valueOf(food.getFood_histamine_level()));
+            foodName.setText(food.getName());
+            foodHistamine.setText(String.valueOf(food.getHistamine_level()));
         }
         // Lookup view for data population
 

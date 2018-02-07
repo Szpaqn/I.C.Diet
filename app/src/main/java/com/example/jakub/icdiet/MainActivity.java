@@ -48,12 +48,12 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
 
-//        dbHelper.insertFood("Gruszka",1,5);
-//        dbHelper.insertFood("Japko",4,80);
-//        dbHelper.insertFood("Bamam",2,15);
-//        dbHelper.insertFood("Amanas",4,65);
-//        dbHelper.insertFood("Ślifka",4,72);
-//        dbHelper.insertFood("Vinko",5,96);
+//        dbHelper.insertNote("Gruszka",1,5);
+//        dbHelper.insertNote("Japko",4,80);
+//        dbHelper.insertNote("Bamam",2,15);
+//        dbHelper.insertNote("Amanas",4,65);
+//        dbHelper.insertNote("Ślifka",4,72);
+//        dbHelper.insertNote("Vinko",5,96);
 
 
 //        Cursor cursor = db.rawQuery("SELECT " + COLUMN_NAME_FOOD_NAME + " , "+ COLUMN_NAME_FOOD_HISTAMINE_LEVEL + " FROM "+ TABLE_FOOD_NAME, null);
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Food food = (Food) listView.getItemAtPosition(i);
-                String itemValue = food.getFood_name() + " " + String.valueOf(food.getFood_histamine_level());
+                String itemValue = food.getName() + " " + String.valueOf(food.getHistamine_level());
                 Toast.makeText(MainActivity.this, itemValue, Toast.LENGTH_SHORT).show();
             }
         });
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void onAdd()
     {
-//        dbHelper.insertFood("Jakieś",1,1);
+//        dbHelper.insertNote("Jakieś",1,1);
 //        adapter.updateArrayList(dbHelper.getAll());
 //        adapter.notifyDataSetChanged();
         Intent intentEdit = new Intent("android.intent.action.EditFood");
@@ -155,9 +155,9 @@ public class MainActivity extends AppCompatActivity {
         Food food = adapter.getItem(i);
 
         Intent intentEdit = new Intent("android.intent.action.EditFood");
-        intentEdit.putExtra("food_name",food.getFood_name());
-        intentEdit.putExtra("food_histamine",food.getFood_histamine_level());
-        intentEdit.putExtra("food_rating",food.getFood_rating());
+        intentEdit.putExtra("food_name",food.getName());
+        intentEdit.putExtra("food_histamine",food.getHistamine_level());
+        intentEdit.putExtra("food_rating",food.getRating());
 
         startActivityForResult(intentEdit, editIntentValue);
     }

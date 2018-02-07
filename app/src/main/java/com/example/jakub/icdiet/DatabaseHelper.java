@@ -72,7 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean removeFood(Food food) {
         String whereClause = COLUMN_NAME_FOOD_NAME + " = ? AND " + COLUMN_NAME_FOOD_HISTAMINE_LEVEL + " = ? AND " + COLUMN_NAME_FOOD_HEALTHY_RANK + " = ?";
-        String[] args = { food.getFood_name(), String.valueOf(food.getFood_histamine_level()), String.valueOf(food.getFood_rating()) };
+        String[] args = { food.getName(), String.valueOf(food.getHistamine_level()), String.valueOf(food.getRating()) };
         long row = db.delete(TABLE_FOOD_NAME, whereClause, args);
         return row >= 0;
     }

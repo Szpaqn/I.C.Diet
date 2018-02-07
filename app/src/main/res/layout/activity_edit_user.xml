@@ -34,7 +34,7 @@
             android:inputType="text"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            tools:labelFor="@id/food_name" />
+            tools:labelFor="@id/name" />
 
         <TextView
             android:id="@+id/textViewFoodHistamine"

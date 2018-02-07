@@ -16,6 +16,5 @@ public final class FoodTableContract {
         public static final String COLUMN_NAME_FOOD_NAME = "food_name";  //nazwa produktu
         public static final String COLUMN_NAME_FOOD_HEALTHY_RANK = "food_rank";  //jak bardzo niezdrowe (na skali)
         public static final String COLUMN_NAME_FOOD_HISTAMINE_LEVEL = "food_histamine_level";  //ile histaminy
-
     }
 }
