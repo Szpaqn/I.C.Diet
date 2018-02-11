@@ -14,18 +14,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btnAdd;
     //    private Button btnRemove;
     private TextView textView;
     private ListView listView;
-    //    private ArrayList<String> list;
+
+//    private ArrayList<String> list;
 //    private ArrayAdapter<Food> adapter;
 //    private FoodViewAdapter adapter;
-    private ListViewFoodAdapter adapter;
-    private DatabaseHelper dbHelper;
-
+    private ArrayListFoodAdapter adapter;
+//    private Adapter
+//    private DatabaseHelper dbHelper;
+    private FoodDAO foodDAO;
     private static final int addNewIntentValue = 1;
     private static final int editIntentValue = 2;
 
@@ -46,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
 //        {
 //            list.add("Item " + i);
 
-        dbHelper = new DatabaseHelper(this);
+//        dbHelper = new DatabaseHelper(this);
+
+        foodDAO = new FoodDAO(this);
 
 //        dbHelper.insertNote("Gruszka",1,5);
 //        dbHelper.insertNote("Japko",4,80);
@@ -60,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
 //        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, android.R.id.text1, list);
 //        adapter = new ArrayAdapter<Food>(this,android.R.layout.simple_list_item_1, android.R.id.text1, dbHelper.getAll());
-        adapter = new ListViewFoodAdapter(this, dbHelper.getAll());
+//        adapter = new ListViewFoodAdapter(this, dbHelper.getAll());
+
+        adapter = new ArrayListFoodAdapter(foodDAO.getAllFood());
 
 //        adapter.setNotifyOnChange(true);
 
@@ -70,25 +78,25 @@ public class MainActivity extends AppCompatActivity {
 
         listView.setAdapter(adapter);
 
-        textView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//        textView.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 //                adapter.getFilter().filter(s.toString());
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.getFilter().filter(s.toString());
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                adapter.getFilter().filter(s.toString());
+//                adapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
 //                AutoCompleteTextView tv = (AutoCompleteTextView)s;
 //                adapter.getFilter().filter(tv.getText());
 //                adapter.getFilter().filter(textView.getText());
-            }
-        });
+//            }
+//        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

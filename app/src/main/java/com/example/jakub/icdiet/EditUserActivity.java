@@ -19,14 +19,14 @@ public class EditUserActivity extends AppCompatActivity {
     private EditText editTextFoodHistamine;
     private Spinner spinnerRating;
     private String[] arrayForSpinner;
-    private DatabaseHelper dbHelper;
+//    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user);
 
-        dbHelper = new DatabaseHelper(this);
+//        dbHelper = new DatabaseHelper(this);
         btnEdit = (Button)findViewById(R.id.buttonEdit);
         btnRemove = (Button)findViewById(R.id.buttonRemove);
         editTextFoodName = (EditText)findViewById(R.id.editTextFoodName);
@@ -110,7 +110,7 @@ public class EditUserActivity extends AppCompatActivity {
             if (!editTextFoodHistamine.getText().toString().isEmpty()) {
                 foodHistamineLevel = Integer.parseInt(editTextFoodHistamine.getText().toString());
             }
-            dbHelper.insertFood(editTextFoodName.getText().toString(), foodHistamineLevel, getIntFromSpinnerRating());
+//            dbHelper.insertFood(editTextFoodName.getText().toString(), foodHistamineLevel, getIntFromSpinnerRating());
         }
     }
 

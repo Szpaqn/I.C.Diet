@@ -2,8 +2,12 @@ package com.example.jakub.icdiet;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 /**
  * Created by jakub on 07.02.18.
@@ -31,7 +35,7 @@ public class FoodDAO {
      * Inserts one foodNote item to the database.
      * @param f
      */
-    public void insertNote(Food f)
+    public void insertFood(Food f)
     {
         realm.beginTransaction();
 
@@ -60,6 +64,11 @@ public class FoodDAO {
     public Food getFood(long id)
     {
         return realm.where(Food.class).equalTo("id", id).findFirst();
+    }
+
+    public RealmResults<Food> getAllFood()
+    {
+        return realm.where(Food.class).findAll();
     }
 
     public void updateFoodNote(Food f){
