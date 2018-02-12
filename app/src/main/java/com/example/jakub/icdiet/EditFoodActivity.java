@@ -50,6 +50,7 @@ public class EditFoodActivity extends AppCompatActivity {
         if( requestCode == 1)  //Add new
         {
             tempFood = null;
+            editTextFoodName.setText(intent.getStringExtra("food_name"));
             btnEdit.setText("Add");
             spinnerRating.setSelection(0, true);
         }

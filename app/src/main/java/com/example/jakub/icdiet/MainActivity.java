@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
 //        adapter.updateArrayList(dbHelper.getAll());
 //        adapter.notifyDataSetChanged();
         Intent intentEdit = new Intent("android.intent.action.EditFood");
+        intentEdit.putExtra("food_name", textView.getText().toString());
         startActivityForResult(intentEdit, addNewIntentValue);
     }
 //
