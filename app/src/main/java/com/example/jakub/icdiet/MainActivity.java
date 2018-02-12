@@ -162,12 +162,16 @@ public class MainActivity extends AppCompatActivity {
         if(adapter.getCount() == 0) return;
         Food food = adapter.getItem(i);
 
-        Intent intentEdit = new Intent("android.intent.action.EditFood");
-        intentEdit.putExtra("food_name",food.getName());
-        intentEdit.putExtra("food_histamine",food.getHistamine_level());
-        intentEdit.putExtra("food_rating",food.getRating());
+        if(food != null){
 
-        startActivityForResult(intentEdit, editIntentValue);
+            Intent intentEdit = new Intent("android.intent.action.EditFood");
+            intentEdit.putExtra("food_id",food.getId());
+//        intentEdit.putExtra("food_name",food.getName());
+//        intentEdit.putExtra("food_histamine",food.getHistamine_level());
+//        intentEdit.putExtra("food_rating",food.getRating());
+
+            startActivityForResult(intentEdit, editIntentValue);
+        }
     }
 
     @Override

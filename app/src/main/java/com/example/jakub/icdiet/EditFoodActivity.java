@@ -9,9 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.util.ArrayList;
-
-public class EditUserActivity extends AppCompatActivity {
+public class EditFoodActivity extends AppCompatActivity {
 
     private Button btnEdit;
     private Button btnRemove;
@@ -20,6 +18,9 @@ public class EditUserActivity extends AppCompatActivity {
     private Spinner spinnerRating;
     private String[] arrayForSpinner;
 //    private DatabaseHelper dbHelper;
+    private FoodDAO foodDAO;
+
+    private Food tempFood;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,8 @@ public class EditUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_user);
 
 //        dbHelper = new DatabaseHelper(this);
+        foodDAO = new FoodDAO(this);
+
         btnEdit = (Button)findViewById(R.id.buttonEdit);
         btnRemove = (Button)findViewById(R.id.buttonRemove);
         editTextFoodName = (EditText)findViewById(R.id.editTextFoodName);
@@ -46,33 +49,41 @@ public class EditUserActivity extends AppCompatActivity {
         int requestCode = intent.getIntExtra("requestCode", 0);
         if( requestCode == 1)  //Add new
         {
+            tempFood = null;
             btnEdit.setText("Add");
             spinnerRating.setSelection(0, true);
         }
         else if (requestCode == 2 ) //Edit
         {
-            btnEdit.setText("Edit");
-            String food_name = intent.getStringExtra("food_name");
-            editTextFoodName.setText(food_name);
-            int food_histamine = intent.getIntExtra("food_histamine", 0);
-            editTextFoodHistamine.setText(String.valueOf(food_histamine));
-            int food_rating = intent.getIntExtra("food_rating", 0);
-            switch (food_rating)
-            {
-                case 0:
-                    spinnerRating.setSelection(0, true);
-                    break;
-                case 1:
-                case 2:
-                    spinnerRating.setSelection(1, true);
-                    break;
-                case 3:
-                    spinnerRating.setSelection(2, true);
-                    break;
-                case 4:
-                case 5:
-                    spinnerRating.setSelection(3, true);
-                    break;
+            long foodId = intent.getLongExtra("food_id", 0);
+            if(foodId == 0){
+                //TODO show info, that you need a name
+                tempFood = null;
+            } else {
+                tempFood = foodDAO.getFood(foodId);
+
+                btnEdit.setText("Edit");
+                editTextFoodName.setText(tempFood.getName());
+                editTextFoodHistamine.setText(String.valueOf(tempFood.getHistamine_level()));
+                switch (tempFood.getRating())
+                {
+                    case 0:
+                        spinnerRating.setSelection(0, true);
+                        break;
+                    case 1:
+                    case 2:
+                        spinnerRating.setSelection(1, true);
+                        break;
+                    case 3:
+                        spinnerRating.setSelection(2, true);
+                        break;
+                    case 4:
+                    case 5:
+                        spinnerRating.setSelection(3, true);
+                        break;
+                    default:
+                        spinnerRating.setSelection(0,true);
+                }
             }
         }
 
@@ -80,6 +91,12 @@ public class EditUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBtnEditClicked();
+            }
+        });
+        btnRemove.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onRemove();
             }
         });
     }
@@ -96,7 +113,10 @@ public class EditUserActivity extends AppCompatActivity {
         else if (requestCode == 2 ) //Edit
         {
             //adapter - update
-            updateFood();
+            if(tempFood != null){
+                updateFood(tempFood);
+            }
+
         }
 
         //TODO send info to MainActivity, to update the listView
@@ -111,21 +131,33 @@ public class EditUserActivity extends AppCompatActivity {
                 foodHistamineLevel = Integer.parseInt(editTextFoodHistamine.getText().toString());
             }
 //            dbHelper.insertFood(editTextFoodName.getText().toString(), foodHistamineLevel, getIntFromSpinnerRating());
+            foodDAO.insertFood(new Food(editTextFoodName.getText().toString(), getIntFromSpinnerRating(), foodHistamineLevel));
         }
     }
 
-    private void updateFood() {
-//        dbHelper.
+    private void updateFood(Food food) {
+        String name = editTextFoodName.getText().toString();
+        if(name.isEmpty()){
+            //TODO show info, that you need a name
+        } else {
+            food.setName(name);
+
+            if (!editTextFoodHistamine.getText().toString().isEmpty()) {
+                food.setHistamine_level(Integer.parseInt(editTextFoodHistamine.getText().toString()));
+            }
+
+            food.setRating(getIntFromSpinnerRating());
+
+            foodDAO.updateFood(food);
+        }
     }
 
-//    private void onRemove()
-//    {
-//        if(adapter.getCount() == 0) return;
-//        Food food = adapter.getItem(i);
-//        handler.removeFood(food);
-//        adapter.updateArrayList(handler.getAll());
-//        adapter.notifyDataSetChanged();
-//    }
+    private void onRemove()
+    {
+        if(tempFood != null){
+            foodDAO.removeFood(tempFood);
+        }
+    }
 
     private int getIntFromSpinnerRating(){
         String rating = spinnerRating.getSelectedItem().toString();

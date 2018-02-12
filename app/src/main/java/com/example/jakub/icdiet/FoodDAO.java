@@ -32,7 +32,7 @@ public class FoodDAO {
     }
 
     /**
-     * Inserts one foodNote item to the database.
+     * Inserts one Food item to the database.
      * @param f
      */
     public void insertFood(Food f)
@@ -66,12 +66,17 @@ public class FoodDAO {
         return realm.where(Food.class).equalTo("id", id).findFirst();
     }
 
+//    public Food getFood(String name)
+//    {
+//        return realm.where(Food.class).equalTo("name", name).findFirst();
+//    }
+
     public RealmResults<Food> getAllFood()
     {
         return realm.where(Food.class).findAll();
     }
 
-    public void updateFoodNote(Food f){
+    public void updateFood(Food f){
         Food food = realm.where(Food.class).equalTo("id", f.getId()).findFirst();
         realm.beginTransaction();
 
@@ -95,9 +100,17 @@ public class FoodDAO {
         realm.commitTransaction();
     }
 
-    private long generateId() {
-        return (realm.where(FoodNote.class).max("id") == null) ? 1 : ((long)realm.where(FoodNote.class).max("id") + 1);
+    public void removeFood(Food food){
+        realm.beginTransaction();
 
+        RealmResults<Food> result = realm.where(Food.class).equalTo("id", food.getId()).findAll();
+        result.deleteAllFromRealm();
+
+        realm.commitTransaction();
+    }
+
+    private long generateId() {
+        return (long) realm.where(Food.class).max("id") + 1;
     }
 
 }
