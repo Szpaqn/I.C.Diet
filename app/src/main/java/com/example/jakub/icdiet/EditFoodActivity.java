@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class EditFoodActivity extends AppCompatActivity {
 
@@ -29,7 +30,7 @@ public class EditFoodActivity extends AppCompatActivity {
 
 //        dbHelper = new DatabaseHelper(this);
         foodDAO = new FoodDAO(this);
-
+        tempFood = new Food();
         btnEdit = (Button)findViewById(R.id.buttonEdit);
         btnRemove = (Button)findViewById(R.id.buttonRemove);
         editTextFoodName = (EditText)findViewById(R.id.editTextFoodName);
@@ -58,15 +59,15 @@ public class EditFoodActivity extends AppCompatActivity {
         {
             long foodId = intent.getLongExtra("food_id", 0);
             if(foodId == 0){
-                //TODO show info, that you need a name
+                Toast.makeText(EditFoodActivity.this, "No name provided", Toast.LENGTH_SHORT).show();
                 tempFood = null;
             } else {
-                tempFood = foodDAO.getFood(foodId);
+                Food foodToUpdate = foodDAO.getFood(foodId);
 
                 btnEdit.setText("Edit");
-                editTextFoodName.setText(tempFood.getName());
-                editTextFoodHistamine.setText(String.valueOf(tempFood.getHistamine_level()));
-                switch (tempFood.getRating())
+                editTextFoodName.setText(foodToUpdate.getName());
+                editTextFoodHistamine.setText(String.valueOf(foodToUpdate.getHistamine_level()));
+                switch (foodToUpdate.getRating())
                 {
                     case 0:
                         spinnerRating.setSelection(0, true);
@@ -85,6 +86,12 @@ public class EditFoodActivity extends AppCompatActivity {
                     default:
                         spinnerRating.setSelection(0,true);
                 }
+                tempFood.setId(foodToUpdate.getId());
+                tempFood.setName(foodToUpdate.getName());
+                tempFood.setRating(foodToUpdate.getRating());
+                tempFood.setHistamine_level(foodToUpdate.getHistamine_level());
+                tempFood.setRating(foodToUpdate.getRating());
+
             }
         }
 
@@ -119,45 +126,53 @@ public class EditFoodActivity extends AppCompatActivity {
             }
 
         }
-
         //TODO send info to MainActivity, to update the listView
     }
 
     private void addFood() {
-        if(editTextFoodName.getText().toString().isEmpty()){
-            //TODO show info, that you need a name
+        String name = editTextFoodName.getText().toString();
+        if(name.isEmpty()){
+            Toast.makeText(EditFoodActivity.this, "Failed to add. No name provided", Toast.LENGTH_LONG).show();
         } else {
         int foodHistamineLevel = 0;
             if (!editTextFoodHistamine.getText().toString().isEmpty()) {
                 foodHistamineLevel = Integer.parseInt(editTextFoodHistamine.getText().toString());
             }
 //            dbHelper.insertFood(editTextFoodName.getText().toString(), foodHistamineLevel, getIntFromSpinnerRating());
-            foodDAO.insertFood(new Food(editTextFoodName.getText().toString(), getIntFromSpinnerRating(), foodHistamineLevel));
+            String str = "Added new food " + name;
+            foodDAO.insertFood(new Food(name, getIntFromSpinnerRating(), foodHistamineLevel));
+            Toast.makeText(EditFoodActivity.this, str , Toast.LENGTH_SHORT).show();
         }
+        finish();
     }
 
     private void updateFood(Food food) {
         String name = editTextFoodName.getText().toString();
+        String str = "Updated food " + food.getName();
         if(name.isEmpty()){
-            //TODO show info, that you need a name
+            Toast.makeText(EditFoodActivity.this, "Failed to Update. No name provided", Toast.LENGTH_LONG).show();
         } else {
-            food.setName(name);
-
-            if (!editTextFoodHistamine.getText().toString().isEmpty()) {
-                food.setHistamine_level(Integer.parseInt(editTextFoodHistamine.getText().toString()));
+            tempFood.setName(name);
+            String histamineStr = editTextFoodHistamine.getText().toString();
+            if (!histamineStr.isEmpty()) {
+                tempFood.setHistamine_level(Integer.parseInt(histamineStr));
             }
+            tempFood.setRating(getIntFromSpinnerRating());
 
-            food.setRating(getIntFromSpinnerRating());
 
-            foodDAO.updateFood(food);
+            foodDAO.updateFood(tempFood);
+            Toast.makeText(EditFoodActivity.this, str, Toast.LENGTH_SHORT).show();
         }
+        finish();
     }
 
-    private void onRemove()
-    {
-        if(tempFood != null){
+    private void onRemove() {
+        if (tempFood != null) {
+            String str = "Removed food " + tempFood.getName();
             foodDAO.removeFood(tempFood);
+            Toast.makeText(EditFoodActivity.this, str, Toast.LENGTH_SHORT).show();
         }
+        finish();
     }
 
     private int getIntFromSpinnerRating(){

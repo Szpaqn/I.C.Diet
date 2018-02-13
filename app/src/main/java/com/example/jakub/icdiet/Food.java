@@ -30,6 +30,7 @@ public class Food extends RealmObject {
     private int amount;
 
     public Food() {
+        name = new String();
         rating = -1;
         histamine_level = -1;
         amount = -1;

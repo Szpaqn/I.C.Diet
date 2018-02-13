@@ -77,9 +77,9 @@ public class FoodDAO {
     }
 
     public void updateFood(Food f){
-        Food food = realm.where(Food.class).equalTo("id", f.getId()).findFirst();
         realm.beginTransaction();
 
+        Food food = realm.where(Food.class).equalTo("id", f.getId()).findFirst();
         if(!f.getName().isEmpty()){
             food.setName(f.getName());
         }
