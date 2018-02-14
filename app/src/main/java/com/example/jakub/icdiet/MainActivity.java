@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnAdd;
     //    private Button btnRemove;
-    private TextView textView;
+    private AutoCompleteTextView textView;
     private ListView listView;
 
 //    private ArrayList<String> list;
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 //        adapter = new ArrayAdapter<Food>(this,android.R.layout.simple_list_item_1, android.R.id.text1, dbHelper.getAll());
 //        adapter = new ListViewFoodAdapter(this, dbHelper.getAll());
 
-        adapter = new ArrayListFoodAdapter(foodDAO.getAllFood());
+        adapter = new ArrayListFoodAdapter(this, foodDAO, textView);
 
 //        adapter.setNotifyOnChange(true);
 
@@ -78,25 +78,45 @@ public class MainActivity extends AppCompatActivity {
 
         listView.setAdapter(adapter);
 
-//        textView.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                adapter.getFilter().filter(s.toString());
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                adapter.getFilter().filter(s.toString());
-//                adapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
+        textView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                if(!s.toString().isEmpty()){
+//                    adapter.updateData(foodDAO.getAllFoodWhere(s.toString()));
+//                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+//                if(!s.toString().isEmpty()) {
+                    adapter.getFilter().filter(s);
+//                } else {
+//                    adapter.updateData(foodDAO.getAllFood());
+//                }
+//                if(!s.toString().isEmpty()) {
+//                    adapter.updateData(foodDAO.getAllFoodWhere(s.toString()));
+//                } else {
+//                    adapter.updateData(foodDAO.getAllFood());
+//                }
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 //                AutoCompleteTextView tv = (AutoCompleteTextView)s;
-//                adapter.getFilter().filter(tv.getText());
+//                String str = tv.getText().toString();
+//                String str = textView.getText().toString();
+//                if(!str.isEmpty()){
+//                } else {
+//                    adapter.updateData(foodDAO.getAllFood());
+//                }
 //                adapter.getFilter().filter(textView.getText());
-//            }
-//        });
+                adapter.notifyDataSetChanged();
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -134,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
 
 
     }
@@ -184,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 // The user picked a contact.
                 // The Intent's data Uri identifies which contact was selected.
 
-                // Do something with the contact here (bigger example below)
+                // Do something with the contact here
             }
         } else if (requestCode == editIntentValue) {
             // Make sure the request was successful
@@ -192,9 +212,10 @@ public class MainActivity extends AppCompatActivity {
                 // The user picked a contact.
                 // The Intent's data Uri identifies which contact was selected.
 
-                // Do something with the contact here (bigger example below)
+                // Do something with the contact here
             }
         }
+        textView.setText("");
         adapter.notifyDataSetChanged();
     }
 

@@ -36,6 +36,12 @@ public class Food extends RealmObject {
         amount = -1;
     }
 
+    @Override
+    public String toString()
+    {
+        return name;
+    }
+
     /**
      * Parametrised contructor for the class Food.
       * @param food_name Foods name.

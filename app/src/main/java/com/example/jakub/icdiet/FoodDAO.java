@@ -1,12 +1,15 @@
 package com.example.jakub.icdiet;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 /**
@@ -73,7 +76,37 @@ public class FoodDAO {
 
     public RealmResults<Food> getAllFood()
     {
-        return realm.where(Food.class).findAll();
+        return realm.where(Food.class).findAll().sort("name");
+    }
+
+    public RealmResults<Food> getAllFoodWhere(String text)
+    {
+        int inted = -1;
+        boolean canParseInt = true;
+        try {
+            inted = Integer.parseInt(text);
+
+        } catch (NumberFormatException exept){
+            canParseInt = false;
+        }
+
+
+
+        if(!text.isEmpty()){
+
+            if(canParseInt && inted > 0)
+            {
+                RealmQuery<Food> query = realm.where(Food.class).contains("name", text).or().equalTo("histamine_level", inted).or().equalTo("rating", inted);
+                Log.d("I.C.Diet", query.findFirst().getName() + String.valueOf(query.findFirst().getId()));
+                return query.findAll();
+            } else {
+                RealmQuery<Food> query = realm.where(Food.class).contains("name", text);
+                Log.d("I.C.Diet", query.findFirst().getName() + String.valueOf(query.findFirst().getId()));
+                return  query.findAll();
+            }
+
+        }
+        return realm.where(Food.class).findAll().sort("name");
     }
 
     public void updateFood(Food f){
