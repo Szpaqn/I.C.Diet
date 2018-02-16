@@ -54,14 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
         foodDAO = new FoodDAO(this);
 
-//        dbHelper.insertNote("Gruszka",1,5);
-//        dbHelper.insertNote("Japko",4,80);
-//        dbHelper.insertNote("Bamam",2,15);
-//        dbHelper.insertNote("Amanas",4,65);
-//        dbHelper.insertNote("Ślifka",4,72);
-//        dbHelper.insertNote("Vinko",5,96);
-
-
 //        Cursor cursor = db.rawQuery("SELECT " + COLUMN_NAME_FOOD_NAME + " , "+ COLUMN_NAME_FOOD_HISTAMINE_LEVEL + " FROM "+ TABLE_FOOD_NAME, null);
 
 //        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, android.R.id.text1, list);

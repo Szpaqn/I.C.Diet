@@ -68,7 +68,7 @@
 //                    results.count = FilteredArrList.size();
 //                    results.values = FilteredArrList;
 //                    if(previousResults == null){
-////                        previousResults = results;
+////                        3previousResults = results;
 //                    } else if(previousResults.values.equals(results.values)) {
 //                        previousResults = results;
 //                        isFiltered = false;

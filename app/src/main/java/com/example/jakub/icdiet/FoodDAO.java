@@ -32,6 +32,15 @@ public class FoodDAO {
         Realm.setDefaultConfiguration(realmConfig);
 
         realm = Realm.getInstance(realmConfig);
+
+        if(generateId() == 1){
+            insertFood(new Food("Gruszka",1,5));
+            insertFood(new Food("Japko",4,80));
+            insertFood(new Food("Bamam",2,15));
+            insertFood(new Food("Amanas",4,65));
+            insertFood(new Food("Ślifka",4,72));
+            insertFood(new Food("Vinko",5,96));
+        }
     }
 
     /**
@@ -143,7 +152,13 @@ public class FoodDAO {
     }
 
     private long generateId() {
-        return (long) realm.where(Food.class).max("id") + 1;
+        long id;
+        try {
+            id = (long) realm.where(Food.class).max("id") + 1;
+        } catch (RuntimeException e) {
+            id = 1;
+        }
+        return id;
     }
 
 }
