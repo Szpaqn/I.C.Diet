@@ -34,10 +34,10 @@ public class ArrayListFoodAdapter extends RealmBaseAdapter<Food> implements List
 
     private FoodDAO foodDAO;
     private OrderedRealmCollection<Food> mResults;
-    private Filter myFilter;
-    private boolean isFiltered;
-    private boolean inDeletionMode = false;
-    private Set<Integer> countersToDelete = new HashSet<>();
+//    private Filter myFilter;
+//    private boolean isFiltered;
+//    private boolean inDeletionMode = false;
+//    private Set<Integer> countersToDelete = new HashSet<>();
 
     public ArrayListFoodAdapter(Context context, FoodDAO foodDAO, AutoCompleteTextView refAutocomplete) {
         super(foodDAO.getAllFood());

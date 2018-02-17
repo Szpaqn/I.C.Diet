@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         btnNotes = (Button)findViewById(R.id.buttonNotes);
         btnFood = (Button)findViewById(R.id.buttonFood);
 
+        btnRecipes.setVisibility(View.GONE);
         btnRecipes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         btnNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentEdit = new Intent("android.intent.action.ListFood");
+                Intent intentEdit = new Intent("android.intent.action.ListNotes");
                 startActivity(intentEdit);
             }
         });

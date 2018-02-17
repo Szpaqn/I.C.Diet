@@ -26,7 +26,7 @@ public class EditFoodActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_user);
+        setContentView(R.layout.activity_edit_food);
 
 //        dbHelper = new DatabaseHelper(this);
         foodDAO = new FoodDAO(this);
@@ -59,7 +59,7 @@ public class EditFoodActivity extends AppCompatActivity {
         {
             long foodId = intent.getLongExtra("food_id", 0);
             if(foodId == 0){
-                Toast.makeText(EditFoodActivity.this, "No name provided", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditFoodActivity.this, "No id provided", Toast.LENGTH_SHORT).show();
                 tempFood = null;
             } else {
                 Food foodToUpdate = foodDAO.getFood(foodId);

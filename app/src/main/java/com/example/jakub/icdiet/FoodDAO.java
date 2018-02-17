@@ -78,10 +78,10 @@ public class FoodDAO {
         return realm.where(Food.class).equalTo("id", id).findFirst();
     }
 
-//    public Food getFood(String name)
-//    {
-//        return realm.where(Food.class).equalTo("name", name).findFirst();
-//    }
+    public Food getFood(String name)
+    {
+        return realm.where(Food.class).equalTo("name", name).findFirst();
+    }
 
     public RealmResults<Food> getAllFood()
     {

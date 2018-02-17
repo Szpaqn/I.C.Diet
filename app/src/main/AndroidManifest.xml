@@ -30,7 +30,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".NotesListActivity"></activity>
+        <activity android:name=".NotesListActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.ListNotes" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".EditNoteActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.EditNotes" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

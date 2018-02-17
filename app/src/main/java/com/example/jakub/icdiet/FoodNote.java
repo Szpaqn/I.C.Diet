@@ -9,10 +9,6 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-/**
- * Created by jakub on 03.02.18.
- */
-
 public class FoodNote extends RealmObject {
 
     @PrimaryKey
@@ -37,9 +33,34 @@ public class FoodNote extends RealmObject {
      */
     private int wellbeing;
 
+    /**
+     * Type of meal that is being described.
+     */
+//    private TypeOfMeal typeOfMeal;
+
+    private String enumDescription;
+
+
+    public TypeOfMeal getTypeOfMeal() {
+        return TypeOfMeal.valueOf(enumDescription);
+    }
+
+    public void setTypeOfMeal(TypeOfMeal type)
+    {
+        this.enumDescription = type.toString();
+    }
+
     public FoodNote()
     {
         wellbeing = -1;
+    }
+
+    public FoodNote(String dateTime, TypeOfMeal mealType, RealmList<Food> listOfFood, int wellbeing)
+    {
+        this.dateOfMeal = dateTime;
+        this.enumDescription = getTypeOfMealStr(mealType);
+        this.listOfEatenFood = listOfFood;
+        this.wellbeing = wellbeing;
     }
 
     public long getId() {
@@ -82,5 +103,29 @@ public class FoodNote extends RealmObject {
         this.wellbeing = wellbeing;
     }
 
+    public static String getTypeOfMealStr(TypeOfMeal type)
+    {
+        switch (type){
+
+            case breakfast:
+                return "breakfast";
+
+            case lunch:
+                return "lunch";
+
+            case dinner:
+                return "dinner";
+
+            case snack:
+                return "snack";
+
+            case supper:
+                return "supper";
+
+            default:
+                return "breakfast";
+
+        }
+    }
 
 }
